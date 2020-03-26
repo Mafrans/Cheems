@@ -1,0 +1,17 @@
+.cheems {
+  width: 474px;
+  height: 652px;
+  position: absolute;
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  left: calc(50% - 474px / 2);
+  top: calc(50% - 652px / 2);
+}
+.cheems .body {
+  position: absolute;
+  top: 20px;
+}
+.cheems .head {
+  position: absolute;
+  left: 40px;
+}
