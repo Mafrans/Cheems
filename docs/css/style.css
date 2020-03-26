@@ -1,3 +1,4 @@
+@import url(./reset.css);
 .cheems {
   width: 474px;
   height: 652px;
@@ -7,11 +8,42 @@
   left: calc(50% - 474px / 2);
   top: calc(50% - 652px / 2);
 }
-.cheems .body {
+.cheems img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.cheems .cheems-wrapper {
+  transform-origin: 50% 75%;
+  transition: transform 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+  width: 100%;
+  height: 100%;
+}
+.cheems .cheems-wrapper .body {
   position: absolute;
   top: 20px;
 }
-.cheems .head {
+.cheems .cheems-wrapper .head {
   position: absolute;
   left: 40px;
+}
+.bubble {
+  position: absolute;
+  font-family: Arial, Helvetica, sans-serif;
+  opacity: 1;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+}
+.bubble.loaded {
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.pat-counter {
+  margin: 1rem;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
 }
