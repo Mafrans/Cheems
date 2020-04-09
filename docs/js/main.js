@@ -22,19 +22,19 @@
             const x = event.screenX - (rect.left + rect.width / 2);
             const y = event.screenY - (rect.top + rect.height / 2);
 
-            if(Math.abs(x) > 150) return;
+            if (Math.abs(x) > 150) return;
             console.log(x, y)
 
             wrapper.style['transform'] = `scaleY(0.9)`;
             lastMouseDown = true;
 
-            if(Math.random() < 0.15) {
+            if (Math.random() < 0.15) {
                 showBubble(messages[Math.floor(Math.random() * messages.length)]);
             }
         });
 
         window.addEventListener('mouseup', event => {
-            if(lastMouseDown) {
+            if (lastMouseDown) {
                 wrapper.style['transform'] = `scaleY(1)`;
                 lastMouseDown = false;
                 pat(1);
@@ -48,15 +48,15 @@
             const y = event.screenY - (rect.top + rect.height / 2);
 
             const angle = Math.atan2(y, x);
-            const degrees = angle * (180/Math.PI);
+            const degrees = angle * (180 / Math.PI);
 
             head.style['transform'] = `rotate(${Math.sign(-x) * (degrees) + 30}deg) scale(${Math.sign(x)}, ${Math.sign(x)})`;
-            
-            if(Math.abs(x) < 50) return;
+
+            if (Math.abs(x) < 50) return;
             cheems.style['transform'] = `scaleX(${Math.sign(-x)})`;
-        })   
+        })
     })
-    
+
     pat = (amount) => {
         pats += amount;
         counter.innerHTML = pats;
@@ -78,9 +78,102 @@
         setTimeout(() => {
             text.classList.add('loaded');
         }, 1000);
-        
+
         setTimeout(() => {
             text.remove();
         }, 2000);
     }
+
+    const burgerImages = [
+        'cheeseburger0',
+        'cheeseburger1',
+        'cheeseburger2',
+    ]
+
+    document.addEventListener('mousemove', (event) => {
+        if (this.grabbed == null) return
+
+        let x = parseInt(this.grabbed.getAttribute('data-x'));
+        let y = parseInt(this.grabbed.getAttribute('data-y'));
+
+        x += event.movementX;
+        y += event.movementY;
+        
+        this.grabbed.setAttribute('data-x', x);
+        this.grabbed.setAttribute('data-y', y);
+
+        this.grabbed.style['left'] = x + 'px';
+        this.grabbed.style['top'] = y + 'px';
+    })
+
+    distance = (x1, y1, x2, y2) => {
+        return Math.sqrt((x2 - x1)**2 + (y2 - y1)**2); 
+    }
+
+    document.addEventListener('mouseup', () => {
+        if(this.grabbed == null) return;
+
+        const headBox = document.querySelector('.cheems-wrapper .head').getBoundingClientRect();
+        const grabBox = this.grabbed.getBoundingClientRect();
+
+        if(distance(headBox.left + headBox.width/2, 
+            headBox.top + headBox.height/2, 
+            grabBox.left + grabBox.width/2, 
+            grabBox.top + grabBox.height/2) < 100) {
+
+            const interval = setInterval(() => {
+                pat(1);
+            }, 300);
+
+            setTimeout(() => {
+                clearInterval(interval);
+            }, 10000);
+
+            this.grabbed.remove();
+        }
+    
+        this.grabbed = null;
+    }); 
+
+    this.grabbed = null;
+    addBurger = () => {
+        const burger = document.createElement('img');
+        burger.draggable = false;
+        burger.src = 'img/' + burgerImages[Math.floor(Math.random() * burgerImages.length)] + '.png';
+        document.body.appendChild(burger);
+
+        let {x, y} = 0;
+        do {
+            x = Math.round(window.innerWidth / 2 + (Math.random() * 2 - 1) * window.innerWidth * 0.4);
+            y = Math.round(window.innerHeight / 2 + (Math.random() * 2 - 1) * window.innerHeight * 0.4);
+        }
+        while ((x - window.innerWidth / 2 < 150 && x - window.innerWidth / 2 > -150)
+            || (y - window.innerHeight / 2 < 200 && y - window.innerHeight / 2 > -200));
+
+        burger.setAttribute('data-x', x);
+        burger.setAttribute('data-y', y);
+
+        burger.style['left'] = x + 'px';
+        burger.style['top'] = y + 'px';
+
+        burger.addEventListener('mousedown', () => {
+            this.grabbed = burger;
+        })
+
+        burger.classList.add('burger');
+
+        setTimeout(() => {
+            burger.classList.add('loaded');
+        }, 10000);
+
+        setTimeout(() => {
+            burger.remove();
+        }, 11000);
+    }
+
+    setInterval(() => {
+        if (Math.random() < 0.15) {
+            addBurger();
+        }
+    }, 3000);
 })();
