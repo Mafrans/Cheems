@@ -13,4 +13,4 @@
 - Tog bort lite gamla bilder.
 
 **23 April**
-- 
+- Fixade lite för mindre skärmar.
