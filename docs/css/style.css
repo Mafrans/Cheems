@@ -44,7 +44,7 @@ body {
   position: absolute;
   width: 65%;
   top: -30px;
-  transform-origin: 60% 66%;
+  transform-origin: 60% 60%;
 }
 .bubble {
   position: absolute;
