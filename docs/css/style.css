@@ -13,6 +13,14 @@ body {
   left: calc(50% - 474px / 2);
   top: calc(50% - 652px / 2);
 }
+@media (max-width: 800px) {
+  .cheems {
+    width: 316px;
+    height: 434px;
+    left: calc(50% - 316px / 2);
+    top: calc(50% - 434px / 2);
+  }
+}
 .cheems img {
   user-drag: none;
   user-select: none;
@@ -30,10 +38,13 @@ body {
 .cheems .cheems-wrapper .body {
   position: absolute;
   top: 20px;
+  width: 100%;
 }
 .cheems .cheems-wrapper .head {
   position: absolute;
-  left: 40px;
+  width: 65%;
+  top: -30px;
+  transform-origin: 60% 66%;
 }
 .bubble {
   position: absolute;
